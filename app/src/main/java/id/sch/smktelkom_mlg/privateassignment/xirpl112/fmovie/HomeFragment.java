@@ -1,6 +1,7 @@
 package id.sch.smktelkom_mlg.privateassignment.xirpl112.fmovie;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +31,15 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
+    public static final String URL_DATA = "https://api.nytimes.com/svc/movies/v2/reviews/search.json?api-key=f2318af5516449e492d2e58f5697c385";
+
     private RecyclerView recyclerView;
+    //private RecyclerView recyclerViewBanner;
     private RecyclerView.Adapter adapter;
+    //private RecyclerView.Adapter adaptera;
+
     private List<HomeListItem> listItems;
+    //private List<BannerItem> bannerItemList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -36,10 +55,21 @@ public class HomeFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        /*LinearLayoutManager layoutManagera
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerViewBanner = (RecyclerView) view.findViewById(R.id.recyclerViewBanner);
+        recyclerViewBanner.setHasFixedSize(true);
+        recyclerViewBanner.setLayoutManager(layoutManagera);*/
+
         listItems = new ArrayList<>();
+        //bannerItemList = new ArrayList<>();
 
 
-        for (int i = 0; i <= 10; i++) {
+        loadRecyclerViewData();
+
+        /*for (int i = 0; i <= 10; i++) {
             HomeListItem listItem = new HomeListItem(
                     "heading" + (i + 1),
                     "Lorem ipsum"
@@ -50,8 +80,52 @@ public class HomeFragment extends Fragment {
 
         adapter = new HomeAdapter(listItems, getActivity());
 
+        */
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    private void loadRecyclerViewData() {
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading data...");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_DATA,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jsonObject = new JSONObject(s);
+
+                            JSONArray array = jsonObject.getJSONArray("results");
+
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject o = array.getJSONObject(i);
+                                HomeListItem item = new HomeListItem(
+                                        o.getJSONObject("multimedia").getString("src"),
+                                        o.getString("display_title"),
+                                        o.getString("byline")
+                                );
+                                listItems.add(item);
+                            }
+                            adapter = new HomeAdapter(listItems, getActivity().getApplicationContext());
+                            recyclerView.setAdapter(adapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity().getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
     }
 
 }

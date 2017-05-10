@@ -7,12 +7,18 @@ import java.io.Serializable;
  */
 
 public class HomeListItem implements Serializable {
+    private String imageUrl;
     private String head;
     private String desc;
 
-    public HomeListItem(String head, String desc) {
+    public HomeListItem(String imageUrl, String head, String desc) {
+        this.imageUrl = imageUrl;
         this.head = head;
         this.desc = desc;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public String getHead() {
