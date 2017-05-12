@@ -29,20 +29,15 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class PopularFragment extends Fragment {
 
-    //public static final String URL_DATA = "https://api.nytimes.com/svc/movies/v2/reviews/search.json?api-key=f2318af5516449e492d2e58f5697c385";
-    public static final String URL_DATA = "https://api.themoviedb.org/3/movie/now_playing?api_key=c68f3a9f7fc8c2ddb8734e1b05b5d21a";
+    public static final String URL_DATA = "https://api.themoviedb.org/3/movie/popular?api_key=c68f3a9f7fc8c2ddb8734e1b05b5d21a";
 
     private RecyclerView recyclerView;
-    //private RecyclerView recyclerViewBanner;
     private RecyclerView.Adapter adapter;
-    //private RecyclerView.Adapter adaptera;
+    private List<PopularListItem> popularListItems;
 
-    private List<HomeListItem> listItems;
-    //private List<BannerItem> bannerItemList;
-
-    public HomeFragment() {
+    public PopularFragment() {
         // Required empty public constructor
     }
 
@@ -51,18 +46,21 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_popular, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        /*LinearLayoutManager layoutManagera
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
-        listItems = new ArrayList<>();
+        recyclerViewBanner = (RecyclerView) view.findViewById(R.id.recyclerViewBanner);
+        recyclerViewBanner.setHasFixedSize(true);
+        recyclerViewBanner.setLayoutManager(layoutManagera);*/
 
+        popularListItems = new ArrayList<>();
         loadRecyclerViewData();
-
-        recyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -83,14 +81,14 @@ public class HomeFragment extends Fragment {
 
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject o = array.getJSONObject(i);
-                                HomeListItem item = new HomeListItem(
+                                PopularListItem item = new PopularListItem(
                                         o.getString("poster_path"),
                                         o.getString("original_title"),
                                         o.getString("release_date")
                                 );
-                                listItems.add(item);
+                                popularListItems.add(item);
                             }
-                            adapter = new HomeAdapter(listItems, getActivity().getApplicationContext());
+                            adapter = new PopularAdapter(popularListItems, getActivity().getApplicationContext());
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();

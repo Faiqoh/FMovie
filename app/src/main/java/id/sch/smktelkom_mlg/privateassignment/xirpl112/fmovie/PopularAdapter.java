@@ -16,41 +16,41 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 /**
- * Created by Faiqoh on 10/05/2017.
+ * Created by Faiqoh on 12/05/2017.
  */
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
-    private List<HomeListItem> homeListItems;
+public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHolder> {
+    private List<PopularListItem> popularListItems;
     private Context context;
 
-    public HomeAdapter(List<HomeListItem> homeListItems, Context context) {
-        this.homeListItems = homeListItems;
+    public PopularAdapter(List<PopularListItem> popularListItems, Context context) {
+        this.popularListItems = popularListItems;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.home_item, parent, false);
+                .inflate(R.layout.popular_item, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        final HomeListItem homeitem = homeListItems.get(position);
-        holder.textViewHead.setText(homeitem.getHead());
-        holder.textViewDesc.setText(homeitem.getDesc());
+    public void onBindViewHolder(PopularAdapter.ViewHolder holder, final int position) {
+        final PopularListItem popitem = popularListItems.get(position);
+        holder.textViewHead.setText(popitem.getHead());
+        holder.textViewDesc.setText(popitem.getDesc());
 
         Glide
                 .with(context)
-                .load("http://image.tmdb.org/t/p/w500" + homeitem.getImageUrl())
+                .load("http://image.tmdb.org/t/p/w500" + popitem.getImageUrl())
                 .into(holder.imageViewOtof);
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "MANTAB " + homeitem.getHead(), Toast.LENGTH_LONG).show();
-                Intent singleBlogIntent = new Intent(context, DetailActivity.class);
+                Toast.makeText(context, "MANTAB " + popitem.getHead(), Toast.LENGTH_LONG).show();
+                Intent singleBlogIntent = new Intent(context, Detail2Activity.class);
                 singleBlogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 singleBlogIntent.putExtra("blog_id", position);
                 context.startActivity(singleBlogIntent);
@@ -61,7 +61,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return homeListItems.size();
+        return popularListItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

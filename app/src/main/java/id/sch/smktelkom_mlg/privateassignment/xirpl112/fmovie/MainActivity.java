@@ -91,12 +91,13 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         if (id == R.id.nav_home) {
             fragment = new HomeFragment();
-            setTitle("Home");
+            setTitle("Now Playing");
         } else if (id == R.id.nav_slideshow) {
-            fragment = new ImportFragment();
-            setTitle("Detail");
+            fragment = new PopularFragment();
+            setTitle("Popular Movie");
         } else if (id == R.id.nav_manage) {
-
+            fragment = new UpcomingFragment();
+            setTitle("Upcoming Movie");
         } else if (id == R.id.nav_share) {
 
         }
