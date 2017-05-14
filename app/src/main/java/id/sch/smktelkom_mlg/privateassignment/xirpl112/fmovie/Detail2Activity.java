@@ -50,10 +50,10 @@ public class Detail2Activity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        textViewHeadet = (TextView) findViewById(R.id.textViewHeadet);
-        textViewDescet = (TextView) findViewById(R.id.textViewDescet);
-        textViewReview = (TextView) findViewById(R.id.textViewReview);
-        imageViewDetail = (ImageView) findViewById(R.id.imageViewDetail);
+        textViewHeadet = (TextView) findViewById(R.id.textViewHeadet2);
+        textViewDescet = (TextView) findViewById(R.id.textViewDescet2);
+        textViewReview = (TextView) findViewById(R.id.textViewReview2);
+        imageViewDetail = (ImageView) findViewById(R.id.imageViewDetail2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +80,7 @@ public class Detail2Activity extends AppCompatActivity {
                             JSONObject o = array.getJSONObject(mPostkey);
 
 
-                            textViewHeadet.setText(o.getString("original_title"));
+                            textViewHeadet.setText(o.getString("original_title") + "\n");
                             textViewDescet.setText("Release Date : " + "\n" + o.getString("release_date"));
                             textViewReview.setText("Overview : " + "\n" + o.getString("overview"));
                             //url = o.getJSONObject("link").getString("url");

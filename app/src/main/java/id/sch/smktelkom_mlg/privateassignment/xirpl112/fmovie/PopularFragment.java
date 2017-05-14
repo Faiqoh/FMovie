@@ -30,12 +30,17 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class PopularFragment extends Fragment {
-
     public static final String URL_DATA = "https://api.themoviedb.org/3/movie/popular?api_key=c68f3a9f7fc8c2ddb8734e1b05b5d21a";
 
+    //public static final String URL_DATA = "https://api.themoviedb.org/3/movie/now_playing?api_key=c68f3a9f7fc8c2ddb8734e1b05b5d21a";
+
     private RecyclerView recyclerView;
+    //private RecyclerView recyclerViewBanner;
     private RecyclerView.Adapter adapter;
-    private List<PopularListItem> popularListItems;
+    //private RecyclerView.Adapter adaptera;
+
+    private List<PopularListItem> poplistItems;
+    //private List<BannerItem> bannerItemList;
 
     public PopularFragment() {
         // Required empty public constructor
@@ -52,15 +57,12 @@ public class PopularFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        /*LinearLayoutManager layoutManagera
-                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
-        recyclerViewBanner = (RecyclerView) view.findViewById(R.id.recyclerViewBanner);
-        recyclerViewBanner.setHasFixedSize(true);
-        recyclerViewBanner.setLayoutManager(layoutManagera);*/
+        poplistItems = new ArrayList<>();
 
-        popularListItems = new ArrayList<>();
         loadRecyclerViewData();
+
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -86,9 +88,9 @@ public class PopularFragment extends Fragment {
                                         o.getString("original_title"),
                                         o.getString("release_date")
                                 );
-                                popularListItems.add(item);
+                                poplistItems.add(item);
                             }
-                            adapter = new PopularAdapter(popularListItems, getActivity().getApplicationContext());
+                            adapter = new PopularAdapter(poplistItems, getActivity().getApplicationContext());
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();

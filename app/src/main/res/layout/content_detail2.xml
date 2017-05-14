@@ -25,7 +25,7 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/textViewHeadet"
+                android:id="@+id/textViewHeadet2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Judul"
@@ -34,7 +34,7 @@
                 android:textSize="10pt" />
 
             <TextView
-                android:id="@+id/textViewDescet"
+                android:id="@+id/textViewDescet2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -42,7 +42,7 @@
                 android:textSize="6pt" />
 
             <TextView
-                android:id="@+id/textViewReview"
+                android:id="@+id/textViewReview2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="7dp"

@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new PopularFragment();
             setTitle("Popular Movie");
         } else if (id == R.id.nav_manage) {
-            fragment = new UpcomingFragment();
-            setTitle("Upcoming Movie");
+            fragment = new FavouriteFragment();
+            setTitle("Favorite");
         } else if (id == R.id.nav_share) {
 
         }

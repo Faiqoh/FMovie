@@ -1,11 +1,14 @@
 package id.sch.smktelkom_mlg.privateassignment.xirpl112.fmovie;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +30,12 @@ public class DetailActivity extends AppCompatActivity {
     public TextView textViewDescet;
     public TextView textViewReview;
     public ImageView imageViewDetail;
+    public EditText editTextJudul;
+    public EditText editTextDes;
     public String url;
+    public String urlGambar;
+    boolean isPressed = true;
+    FavouriteItem favouriteitem;
     private Integer mPostkey = null;
 
     @Override
@@ -40,20 +48,50 @@ public class DetailActivity extends AppCompatActivity {
         mPostkey = getIntent().getExtras().getInt("blog_id");
         loadRecyclerViewData();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);*/
-            }
-        });
-
         textViewHeadet = (TextView) findViewById(R.id.textViewHeadet);
         textViewDescet = (TextView) findViewById(R.id.textViewDescet);
         textViewReview = (TextView) findViewById(R.id.textViewReview);
         imageViewDetail = (ImageView) findViewById(R.id.imageViewDetail);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isPressed) {
+                    doSave();
+                    Snackbar.make(view, "Berhasil ditambahkan ke favorit", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    doDelete();
+                } else {
+
+                    Snackbar.make(view, "Film favorit anda", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+                isPressed = !isPressed;
+
+            }
+
+            private void doDelete() {
+                String judul = textViewHeadet.getText().toString();
+                SharedPreferences.Editor editor = getSharedPreferences(judul, MODE_PRIVATE).edit();
+                editor.putBoolean("isNew", false);
+                editor.commit();
+            }
+
+            private void doSave() {
+                String judul = textViewHeadet.getText().toString();
+                String deskripsi = textViewDescet.getText().toString();
+                String urlgambar = urlGambar;
+                favouriteitem = new FavouriteItem(judul, deskripsi, urlgambar);
+                favouriteitem.save();
+
+                SharedPreferences.Editor editor = getSharedPreferences(judul, MODE_PRIVATE).edit();
+                editor.putBoolean("isNew", true);
+                editor.commit();
+            }
+        });
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +118,17 @@ public class DetailActivity extends AppCompatActivity {
                             JSONObject o = array.getJSONObject(mPostkey);
 
 
-                            textViewHeadet.setText(o.getString("original_title"));
+                            textViewHeadet.setText(o.getString("original_title") + "\n");
                             textViewDescet.setText("Release Date : " + "\n" + o.getString("release_date"));
                             textViewReview.setText("Overview : " + "\n" + o.getString("overview"));
+                            urlGambar = o.getString("poster_path");
                             //url = o.getJSONObject("link").getString("url");
+
+                            Glide
+                                    .with(DetailActivity.this)
+                                    .load(urlGambar)
+                                    .into(imageViewDetail);
+
                             Glide
                                     .with(DetailActivity.this)
                                     .load("http://image.tmdb.org/t/p/w500" + o.getString("poster_path"))

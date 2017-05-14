@@ -49,7 +49,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "MANTAB " + homeitem.getHead(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, homeitem.getHead(), Toast.LENGTH_LONG).show();
                 Intent singleBlogIntent = new Intent(context, DetailActivity.class);
                 singleBlogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 singleBlogIntent.putExtra("blog_id", position);

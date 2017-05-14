@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -13,19 +12,18 @@
         app:cardElevation="8dp">
 
         <LinearLayout
-            android:id="@+id/LinearLayout2"
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageViewOtof"
+                android:id="@+id/imageViewOtoffav"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="fitXY" />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textViewHead2"
+                android:id="@+id/textViewHeadfav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="7dp"
@@ -33,11 +31,10 @@
                 android:paddingTop="7dp"
                 android:text="Heading"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                android:textColor="@color/colorPrimary"
                 android:textSize="8pt" />
 
             <TextView
-                android:id="@+id/textViewDesc2"
+                android:id="@+id/textViewDescfav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="7dp"
@@ -45,8 +42,18 @@
                 android:paddingRight="7dp"
                 android:text="Description"
                 android:textSize="4pt" />
-        </LinearLayout>
 
+            <Button
+                android:id="@+id/buttonDelete"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Delete"
+                android:textAlignment="viewEnd" />
+
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

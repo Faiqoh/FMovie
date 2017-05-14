@@ -1,12 +1,14 @@
 package id.sch.smktelkom_mlg.privateassignment.xirpl112.fmovie;
 
+import com.orm.SugarRecord;
+
 import java.io.Serializable;
 
 /**
  * Created by Faiqoh on 10/05/2017.
  */
 
-public class HomeListItem implements Serializable {
+public class HomeListItem extends SugarRecord implements Serializable {
     private String imageUrl;
     private String head;
     private String desc;

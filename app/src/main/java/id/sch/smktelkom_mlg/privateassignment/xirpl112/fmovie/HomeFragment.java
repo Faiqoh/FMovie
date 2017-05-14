@@ -31,7 +31,6 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
-    //public static final String URL_DATA = "https://api.nytimes.com/svc/movies/v2/reviews/search.json?api-key=f2318af5516449e492d2e58f5697c385";
     public static final String URL_DATA = "https://api.themoviedb.org/3/movie/now_playing?api_key=c68f3a9f7fc8c2ddb8734e1b05b5d21a";
 
     private RecyclerView recyclerView;
@@ -56,7 +55,6 @@ public class HomeFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
 
         listItems = new ArrayList<>();
 
